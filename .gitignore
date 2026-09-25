@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.env
+
+# Test / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Eval artifacts (keep the harness, not the runs)
+eval_runs/
+*.eval.json
+
+# Model / data caches
+.cache/
+data/nvd/
+*.duckdb
+
+# Editor
+.vscode/
+.idea/
+.DS_Store

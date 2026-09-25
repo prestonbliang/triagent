@@ -1,0 +1,6 @@
+{"query": "log4j JNDI LDAP lookup remote code execution", "relevant": ["CVE-2021-44228"]}
+{"query": "OpenSSL TLS heartbeat buffer over-read memory disclosure heartbleed", "relevant": ["CVE-2014-0160"]}
+{"query": "unauthenticated RDP remote desktop services remote code execution", "relevant": ["CVE-2019-0708"]}
+{"query": "deserialization of untrusted data leads to code execution in java logging", "relevant": ["CVE-2021-44228"]}
+{"query": "read sensitive memory from a remote server without authentication over TLS", "relevant": ["CVE-2014-0160"]}
+{"query": "BlueKeep wormable pre-auth vulnerability in terminal services", "relevant": ["CVE-2019-0708"]}

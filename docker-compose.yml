@@ -1,0 +1,23 @@
+# Postgres + pgvector for the production vector store.
+#   docker compose up -d
+#   make ingest        # loads NVD CVEs into the store
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: triagent
+      POSTGRES_PASSWORD: triagent
+      POSTGRES_DB: triagent
+    ports:
+      - "5432:5432"
+    volumes:
+      - triagent_pgdata:/var/lib/postgresql/data
+      - ./scripts/init_pgvector.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U triagent -d triagent"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  triagent_pgdata:

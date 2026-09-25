@@ -1,0 +1,42 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test-and-eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install (offline-runnable core)
+        run: pip install -e ".[dev,api]"
+
+      - name: Lint
+        run: ruff check src tests
+
+      - name: Type check
+        run: mypy src
+
+      - name: Unit tests
+        run: pytest --cov=triagent --cov-report=term-missing
+
+      # The eval gate is the point: a PR that regresses CVSS-scoring MAE or
+      # retrieval recall below threshold fails the build. Runs with the
+      # deterministic fake LLM/embedder so it needs no secrets.
+      - name: Eval gate (scoring MAE + retrieval recall)
+        run: triagent-eval --suite all --gate --out eval_runs/ci.json
+
+      - name: Upload eval report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-report
+          path: eval_runs/
